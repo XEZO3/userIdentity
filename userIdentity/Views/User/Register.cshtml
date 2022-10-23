@@ -1,0 +1,32 @@
+﻿@model userIdentity.Models.VM.RegisterVM
+
+<div class="container">
+    <div class="row justify-content-center" >
+        <div class="col-8">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-action="Register">
+                <div class="mb-3">
+                <label  class="form-label">UserName</label>
+                <input type="text" class="form-control" asp-for="UserName" >
+                
+              </div>
+              <div class="mb-3">
+                <label  class="form-label">Name</label>
+                <input type="text" class="form-control" asp-for="Name" >
+                
+              </div>
+              <div class="mb-3">
+                <label  class="form-label">Email address</label>
+                <input type="email" class="form-control"  asp-for="Email" >
+               
+              </div>
+              <div class="mb-3">
+                <label  class="form-label">Password</label>
+                <input type="text"  asp-for="Password" class="form-control" >
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
