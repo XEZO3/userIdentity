@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using userIdentity.Data;
+using userIdentity.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<CoursesContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection"));
 });
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CoursesContext>();
+builder.Services.AddIdentity<userAuth, IdentityRole>().AddEntityFrameworkStores<CoursesContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

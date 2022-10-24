@@ -8,13 +8,13 @@ namespace userIdentity.Controllers
 {
     public class UserController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _UserManager;
+        private readonly SignInManager<userAuth> _signInManager;
+        private readonly UserManager<userAuth> _UserManager;
         //UserController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> UserManager) {
         //    _signInManager = signInManager;
         //    _UserManager = UserManager;
         //}
-        public UserController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> UserManager) {
+        public UserController(SignInManager<userAuth> signInManager, UserManager<userAuth> UserManager) {
             _signInManager = signInManager;
             _UserManager = UserManager;
         }
