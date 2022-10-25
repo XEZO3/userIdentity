@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using userIdentity.Data;
 using userIdentity.Models;
 using userIdentity.Models.VM;
 using userIdentity.Utilty;
@@ -8,15 +9,17 @@ namespace userIdentity.Controllers
 {
     public class UserController : Controller
     {
+        private readonly CoursesContext _context;
         private readonly SignInManager<userAuth> _signInManager;
         private readonly UserManager<userAuth> _UserManager;
         //UserController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> UserManager) {
         //    _signInManager = signInManager;
         //    _UserManager = UserManager;
         //}
-        public UserController(SignInManager<userAuth> signInManager, UserManager<userAuth> UserManager) {
+        public UserController(CoursesContext context, SignInManager<userAuth> signInManager, UserManager<userAuth> UserManager) {
             _signInManager = signInManager;
             _UserManager = UserManager;
+            _context = context;
         }
         [HttpGet]
         public IActionResult Register()

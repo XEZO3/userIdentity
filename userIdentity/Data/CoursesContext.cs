@@ -10,9 +10,12 @@ namespace userIdentity.Data
         {
 
         }
-        public DbSet<userAuth> categories { get; set; }
+        public DbSet<userAuth> Users { get; set; }
+        public DbSet<Courses> Courses { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartItems> cartitem { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder builder) {
-            builder.UseSqlServer("Server=DESKTOP-JD76U9C;Database=courses2;Trusted_Connection=True");
+            builder.UseSqlServer("Server=LAPTOP-BFFJ9SQ9;Database=courses2;Trusted_Connection=True");
         }
     }
 }
