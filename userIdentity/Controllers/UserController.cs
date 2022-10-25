@@ -52,6 +52,10 @@ namespace userIdentity.Controllers
         public IActionResult login() {
             return View();
         }
+        public IActionResult logout() {
+            _signInManager.SignOutAsync();
+            return RedirectToAction("login");
+        }
         public async Task<IActionResult> login(LoginVM loginVM)
         {
             var userName = await _UserManager.FindByNameAsync(loginVM.UserName);
