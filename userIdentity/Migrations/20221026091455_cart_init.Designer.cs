@@ -12,8 +12,8 @@ using userIdentity.Data;
 namespace userIdentity.Migrations
 {
     [DbContext(typeof(CoursesContext))]
-    [Migration("20221025063920_init_all")]
-    partial class init_all
+    [Migration("20221026091455_cart_init")]
+    partial class cart_init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -12,7 +12,7 @@ namespace userIdentity.Controllers
         private readonly CoursesContext _context;
         public CoursesController(CoursesContext context)
         {
-           
+
             _context = context;
         }
         // GET: CoursesController
@@ -25,7 +25,7 @@ namespace userIdentity.Controllers
         // GET: CoursesController/Details/5
         public ActionResult Details(int id)
         {
-            
+
             return View();
         }
 
@@ -37,11 +37,11 @@ namespace userIdentity.Controllers
 
         // POST: CoursesController/Create
         [HttpPost]
-        
+
         public async Task<ActionResult> Create(Courses collection)
         {
-            collection.CreateDate=DateTime.Now;
-             _context.Courses.Add(collection);
+            collection.CreateDate = DateTime.Now;
+            _context.Courses.Add(collection);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

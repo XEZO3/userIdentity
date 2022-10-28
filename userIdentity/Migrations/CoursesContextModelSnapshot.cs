@@ -262,7 +262,7 @@ namespace userIdentity.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
@@ -271,14 +271,11 @@ namespace userIdentity.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("coursesId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("coursesId");
+                    b.HasIndex("CoursesId");
 
                     b.ToTable("cartitem");
                 });
@@ -384,7 +381,7 @@ namespace userIdentity.Migrations
 
             modelBuilder.Entity("userIdentity.Models.CartItems", b =>
                 {
-                    b.HasOne("userIdentity.Models.Cart", null)
+                    b.HasOne("userIdentity.Models.Cart", "cart")
                         .WithMany("cartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -392,9 +389,11 @@ namespace userIdentity.Migrations
 
                     b.HasOne("userIdentity.Models.Courses", "courses")
                         .WithMany()
-                        .HasForeignKey("coursesId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("cart");
 
                     b.Navigation("courses");
                 });

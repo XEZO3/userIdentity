@@ -4,7 +4,7 @@
 
 namespace userIdentity.Migrations
 {
-    public partial class init_cart_courses : Migration
+    public partial class remove : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

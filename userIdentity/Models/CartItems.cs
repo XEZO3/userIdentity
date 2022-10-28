@@ -7,7 +7,8 @@ namespace userIdentity.Models
         [ForeignKey("Cart")]
         public int CartId { get; set; }
         [ForeignKey("Courses")]
-        public int CourseId { get; set; }
+        public int CoursesId { get; set; } 
         public Courses courses { get; set; }
+        public Cart cart { get; set; }
     }
 }
