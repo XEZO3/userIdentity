@@ -12,8 +12,8 @@ using userIdentity.Data;
 namespace userIdentity.Migrations
 {
     [DbContext(typeof(CoursesContext))]
-    [Migration("20221026101837_add_id")]
-    partial class add_id
+    [Migration("20221028183910_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -228,63 +228,6 @@ namespace userIdentity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("userIdentity.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Cart");
-                });
-
-            modelBuilder.Entity("userIdentity.Models.CartItems", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("coursesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("coursesId");
-
-                    b.ToTable("cartitem");
-                });
-
             modelBuilder.Entity("userIdentity.Models.Courses", b =>
                 {
                     b.Property<int>("Id")
@@ -371,41 +314,6 @@ namespace userIdentity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("userIdentity.Models.Cart", b =>
-                {
-                    b.HasOne("userIdentity.Models.userAuth", "userAuth")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("userAuth");
-                });
-
-            modelBuilder.Entity("userIdentity.Models.CartItems", b =>
-                {
-                    b.HasOne("userIdentity.Models.Cart", "cart")
-                        .WithMany("cartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("userIdentity.Models.Courses", "courses")
-                        .WithMany()
-                        .HasForeignKey("coursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("cart");
-
-                    b.Navigation("courses");
-                });
-
-            modelBuilder.Entity("userIdentity.Models.Cart", b =>
-                {
-                    b.Navigation("cartItems");
                 });
 #pragma warning restore 612, 618
         }

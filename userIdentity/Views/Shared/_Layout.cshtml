@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@inject IHttpContextAccessor session
+@inject UserManager<userAuth> userManger
+@inject SignInManager<userAuth> SignInManger
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,15 +31,31 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
+                        @if (SignInManger.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" >welcome @userManger.GetUserName(User)</a>
+                        </li> 
                         <li class="nav-item">
+                            <a class="nav-link text-dark" id="counter" >@session.HttpContext.Session.GetInt32("cart")</a>
+                        </li>
+                            
+                        
+                        }
+                        else
+                        {
+                           <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                         </li>
-                        <li class="nav-item">
+                           <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">LogOut</a>
                         </li>
+                        }
+
                     </ul>
                 </div>
             </div>

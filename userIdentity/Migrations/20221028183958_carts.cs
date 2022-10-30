@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace userIdentity.Migrations
 {
-    public partial class cart_init : Migration
+    public partial class carts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,29 +31,28 @@ namespace userIdentity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "cartitem",
+                name: "cartItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false),
-                    coursesId = table.Column<int>(type: "int", nullable: false),
+                    CoursesId = table.Column<int>(type: "int", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cartitem", x => x.Id);
+                    table.PrimaryKey("PK_cartItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_cartitem_Cart_CartId",
+                        name: "FK_cartItems_Cart_CartId",
                         column: x => x.CartId,
                         principalTable: "Cart",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_cartitem_Courses_coursesId",
-                        column: x => x.coursesId,
+                        name: "FK_cartItems_Courses_CoursesId",
+                        column: x => x.CoursesId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -65,20 +64,20 @@ namespace userIdentity.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_cartitem_CartId",
-                table: "cartitem",
+                name: "IX_cartItems_CartId",
+                table: "cartItems",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_cartitem_coursesId",
-                table: "cartitem",
-                column: "coursesId");
+                name: "IX_cartItems_CoursesId",
+                table: "cartItems",
+                column: "CoursesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "cartitem");
+                name: "cartItems");
 
             migrationBuilder.DropTable(
                 name: "Cart");

@@ -8,6 +8,8 @@ namespace userIdentity.Models
         public string UserId { get; set; }
         public userAuth userAuth { get; set; }
         public List<CartItems> cartItems { get; set; }
-
+        public Cart() {
+        cartItems = new List<CartItems>();
+        }
     }
 }

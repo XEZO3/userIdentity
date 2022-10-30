@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using userIdentity.Data;
 using userIdentity.Models;
@@ -8,16 +10,22 @@ namespace userIdentity.Controllers
     public class CartController : Controller
     {
         private readonly CoursesContext _context;
-        public CartController(CoursesContext context)
+        
+        private readonly SignInManager<userAuth> _signInManager;
+        private readonly UserManager<userAuth> _UserManager;
+        public CartController(CoursesContext context, SignInManager<userAuth> signInManager, UserManager<userAuth> UserManager)
         {
             _context = context;
+            _signInManager = signInManager;
+            _UserManager = UserManager;
         }
         public IActionResult Index()
         {
 
-            return View();
+            var items = _context.cartItems.Include(x=>x.cart).Include(x=>x.courses).Where(x=>x.cart.UserId == _UserManager.GetUserId(User));
+            return View(items);
         }
-        public async  Task<IActionResult> AddToCart(int Id)
+        public async Task<int> AddToCart(int Id)
         {
             //Courses courses = _context.Courses.Find(Id);
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -32,14 +40,52 @@ namespace userIdentity.Controllers
                 };
                 cart.cartItems = new List<CartItems>()
                 {
-                    new CartItems(){CartId=cart.Id,CoursesId=1}
+                    new CartItems(){CartId=cart.Id,CoursesId=Id}
                 };
                 _context.Cart.Add(cart);
-               await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
 
             }
-            return View();
+            else
+            {
+                var course = _context.cartItems.Include(x => x.cart).FirstOrDefault(x => x.CoursesId == Id && x.cart.UserId == userId);
+                if (course == null)
+                {
+
+                    cart.cartItems.Add(new CartItems() { CartId = cart.Id, CoursesId = Id, });
+
+                }
+                else
+                {
+                    return 0;
+                }
+                _context.Cart.Update(cart);
+                await _context.SaveChangesAsync();
+
+            }
+            var count = _context.cartItems.Include(x => x.cart).Where(x => x.CartId == cart.Id).Count();
+            HttpContext.Session.SetInt32("cart", count);
+            return count;
         }
+        public async Task<List<dynamic>> RemoveFromCart(int Id)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var cart = _context.cartItems.FirstOrDefault(x=>x.CoursesId == Id);
+            if (cart == null) {
+                return new List<dynamic> { "empty",0};
+            }
+            else
+            {
+                _context.cartItems.Remove(cart);
+                await _context.SaveChangesAsync();
+                var count = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == userId)?.cartItems.Count();
+                HttpContext.Session.SetInt32("cart", (int)count);
+                return new List<dynamic> { "full", count };
+            }
+            
+           
+        }
+       
     }
 }

@@ -20,6 +20,7 @@ namespace userIdentity.Controllers
             _signInManager = signInManager;
             _UserManager = UserManager;
             _context = context;
+            
         }
         [HttpGet]
         public IActionResult Register()
@@ -53,6 +54,10 @@ namespace userIdentity.Controllers
         }
         [HttpGet]
         public IActionResult login() {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("index","Home");
+            }
             return View();
         }
         public IActionResult logout() {

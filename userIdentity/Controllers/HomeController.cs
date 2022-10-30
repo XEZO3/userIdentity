@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 using userIdentity.Data;
 using userIdentity.Models;
 
@@ -20,6 +22,14 @@ namespace userIdentity.Controllers
 
         public IActionResult Index()
         {
+            if (User != null) {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var count = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == userId)?.cartItems.Count();
+                HttpContext.Session.SetInt32("cart", (int)count);
+            }
+            
+            
+            
             var courses = _context.Courses.ToList();
             return View(courses);
         }

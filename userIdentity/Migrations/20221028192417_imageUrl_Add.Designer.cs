@@ -12,8 +12,8 @@ using userIdentity.Data;
 namespace userIdentity.Migrations
 {
     [DbContext(typeof(CoursesContext))]
-    [Migration("20221026100121_remove")]
-    partial class remove
+    [Migration("20221028192417_imageUrl_Add")]
+    partial class imageUrl_Add
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -264,7 +264,7 @@ namespace userIdentity.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
@@ -273,16 +273,13 @@ namespace userIdentity.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("coursesId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("coursesId");
+                    b.HasIndex("CoursesId");
 
-                    b.ToTable("cartitem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("userIdentity.Models.Courses", b =>
@@ -295,6 +292,10 @@ namespace userIdentity.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -386,7 +387,7 @@ namespace userIdentity.Migrations
 
             modelBuilder.Entity("userIdentity.Models.CartItems", b =>
                 {
-                    b.HasOne("userIdentity.Models.Cart", null)
+                    b.HasOne("userIdentity.Models.Cart", "cart")
                         .WithMany("cartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -394,9 +395,11 @@ namespace userIdentity.Migrations
 
                     b.HasOne("userIdentity.Models.Courses", "courses")
                         .WithMany()
-                        .HasForeignKey("coursesId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("cart");
 
                     b.Navigation("courses");
                 });

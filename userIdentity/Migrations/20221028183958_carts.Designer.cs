@@ -12,8 +12,8 @@ using userIdentity.Data;
 namespace userIdentity.Migrations
 {
     [DbContext(typeof(CoursesContext))]
-    [Migration("20221026103621_fix_the_coursesId")]
-    partial class fix_the_coursesId
+    [Migration("20221028183958_carts")]
+    partial class carts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -279,7 +279,7 @@ namespace userIdentity.Migrations
 
                     b.HasIndex("CoursesId");
 
-                    b.ToTable("cartitem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("userIdentity.Models.Courses", b =>

@@ -277,7 +277,7 @@ namespace userIdentity.Migrations
 
                     b.HasIndex("CoursesId");
 
-                    b.ToTable("cartitem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("userIdentity.Models.Courses", b =>
@@ -290,6 +290,10 @@ namespace userIdentity.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
