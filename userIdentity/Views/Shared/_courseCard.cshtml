@@ -1,0 +1,17 @@
+﻿@model Courses
+
+
+
+
+                    <div class="card" style="width: 18rem;">
+              <img src="~/images/courses/@Model.ImageUrl" width="100%" height="180px" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <div class="row">
+                    <a class="col btn btn-success" onclick="AddToCart(@Model.Id)" >add</a>
+                <a class="col btn btn-danger" onclick="RemoveFromCart(@Model.Id)">remove</a>
+                </div>
+              
+              </div>
+            </div>
+             

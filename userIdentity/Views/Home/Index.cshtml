@@ -8,17 +8,7 @@
             
             
                 <div class="col">
-                    <div class="card" style="width: 18rem;">
-              <img src="~/images/courses/@item.ImageUrl" width="100%" height="180px" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">@item.Name</h5>
-                <div class="row">
-                    <a class="col btn btn-success" onclick="AddToCart(@item.Id)" >add</a>
-                <a class="col btn btn-danger" onclick="RemoveFromCart(@item.Id)">remove</a>
-                </div>
-              
-              </div>
-            </div>
+               <partial name="_courseCard" for="@item" />
                 </div>
             
             
