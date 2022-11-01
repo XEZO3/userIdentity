@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -12,17 +13,20 @@ namespace userIdentity.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CoursesContext _context;
-        
+        private readonly SignInManager<userAuth> _signInManager;
+        private readonly UserManager<userAuth> _UserManager;
 
-        public HomeController(ILogger<HomeController> logger, CoursesContext context)
+        public HomeController(ILogger<HomeController> logger, CoursesContext context,SignInManager<userAuth> signInManager,UserManager<userAuth> userManager)
         {
             _logger = logger;
             _context = context;
+            _signInManager = signInManager;
+            _UserManager = userManager;
         }
 
         public IActionResult Index()
         {
-            if (User != null) {
+            if (_signInManager.IsSignedIn(User)) {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 var count = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == userId)?.cartItems.Count();
                 HttpContext.Session.SetInt32("cart", (int)count);

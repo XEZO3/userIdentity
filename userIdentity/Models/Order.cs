@@ -7,6 +7,8 @@ namespace userIdentity.Models
         [ForeignKey("userAuth")]
         public string UserId { get; set; }
         public string State { get; set; }
+
+       
         public List<OrderItem> orderItems { get; set; }
 
         public Order()

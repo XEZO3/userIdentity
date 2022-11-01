@@ -86,6 +86,19 @@ namespace userIdentity.Controllers
             
            
         }
+        public IActionResult checkOut() {
+            Order order = new Order() {
+                 State = "pending", UserId = _UserManager.GetUserId(User)
+        };
+             var cartItem = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == _UserManager.GetUserId(User)).cartItems.ToList();
+            foreach (var item in cartItem) {
+            
+            order.orderItems.Add(new OrderItem() { OrderId = order.Id, CoursesId = item.CoursesId });
+            }
+            _context.Order.Add(order);
+            _context.SaveChanges();
+        return RedirectToAction("index");
+        }
        
     }
 }
