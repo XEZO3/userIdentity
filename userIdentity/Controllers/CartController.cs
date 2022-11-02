@@ -87,10 +87,12 @@ namespace userIdentity.Controllers
            
         }
         public IActionResult checkOut() {
+            var cartItem = _context.Cart.Include(x => x.cartItems).ThenInclude(x=>x.courses).FirstOrDefault(x => x.UserId == _UserManager.GetUserId(User)).cartItems.ToList();
+            var total = cartItem.Sum(x => x.courses.Price);
             Order order = new Order() {
-                 State = "pending", UserId = _UserManager.GetUserId(User)
+                 State = "pending", UserId = _UserManager.GetUserId(User),Totalprice = total
         };
-             var cartItem = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == _UserManager.GetUserId(User)).cartItems.ToList();
+            
             foreach (var item in cartItem) {
             
             order.orderItems.Add(new OrderItem() { OrderId = order.Id, CoursesId = item.CoursesId });

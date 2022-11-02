@@ -325,6 +325,9 @@ namespace userIdentity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Totalprice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 

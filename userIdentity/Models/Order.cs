@@ -8,7 +8,7 @@ namespace userIdentity.Models
         public string UserId { get; set; }
         public string State { get; set; }
 
-       
+        public decimal Totalprice { get; set; }
         public List<OrderItem> orderItems { get; set; }
 
         public Order()

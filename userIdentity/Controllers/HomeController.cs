@@ -28,8 +28,8 @@ namespace userIdentity.Controllers
         {
             if (_signInManager.IsSignedIn(User)) {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var count = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == userId)?.cartItems.Count();
-                HttpContext.Session.SetInt32("cart", (int)count);
+                var count = _context.Cart.Include(x => x.cartItems).FirstOrDefault(x => x.UserId == userId)?.cartItems;
+                HttpContext.Session.SetInt32("cart", (count ==null)?0:count.Count());
             }
             
             
