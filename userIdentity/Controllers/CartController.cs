@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -25,11 +26,12 @@ namespace userIdentity.Controllers
             var items = _context.cartItems.Include(x=>x.cart).Include(x=>x.courses).Where(x=>x.cart.UserId == _UserManager.GetUserId(User));
             return View(items);
         }
+         [Authorize]
         public async Task<int> AddToCart(int Id)
         {
             //Courses courses = _context.Courses.Find(Id);
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = _UserManager.GetUserId(User);
             var cart = _context.Cart.FirstOrDefault(x => x.UserId == userId);
             if (cart == null)
             {
@@ -101,6 +103,7 @@ namespace userIdentity.Controllers
             _context.SaveChanges();
         return RedirectToAction("index");
         }
+        
        
     }
 }

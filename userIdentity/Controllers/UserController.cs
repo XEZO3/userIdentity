@@ -74,8 +74,9 @@ namespace userIdentity.Controllers
                
                 return RedirectToAction("Index", "Home");
             }
-            else { 
-            return View();
+            else {
+               
+                return View();
             }
             
         }
